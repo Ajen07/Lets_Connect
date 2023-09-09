@@ -29,5 +29,9 @@ const commentSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+commentSchema.pre("deleteOne", async function () {
+  const id = this.getQuery()["_id"];
+  await mongoose.model("Comment").deleteMany({ parent: id });
+});
 
 export default mongoose.model("Comment", commentSchema);

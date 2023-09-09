@@ -4,21 +4,25 @@ const postSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: true,
-    ref:'Users'
+    ref: "Users",
   },
-  description:{
-    type:String,
-    max:1000,
-    required:true
+  description: {
+    type: String,
+    max: 1000,
+    required: true,
   },
   picturePath: {
     type: String,
-    default:""
+    default: "",
   },
   likes: {
     type: Map,
     of: Boolean,
   },
+});
+postSchema.pre("deleteOne",async function () {
+  const id = this.getQuery()["_id"];
+  await mongoose.model("Comment").deleteMany({ postId: id });
 });
 
 export default mongoose.model("Posts", postSchema);

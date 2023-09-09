@@ -52,4 +52,4 @@ const addRemoveFriend = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: "friends Updated successfully" });
 };
 
-export { getSingleUser, getUserFriends, addRemoveFriend ,getAllUsers};
+export { getSingleUser, getUserFriends, addRemoveFriend, getAllUsers };
