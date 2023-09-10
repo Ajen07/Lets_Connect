@@ -2,24 +2,33 @@ import { StatusCodes } from "http-status-codes";
 import CommentSchema from "../model/CommentSchema.js";
 import { BadRequestError, NotFoundError } from "../errors/index.js";
 import { checkUserPermissions } from "../utils/checkUserPermissions.js";
+import { encrytion } from "../utils/encryption.js";
+import { decryption } from "../utils/decryption.js";
 
 const getAllComments = async (req, res) => {
   const comments = await CommentSchema.find({});
-
+  comments.forEach(
+    (comment) => (comment.comment = decryption(comment.comment))
+  );
   res.status(StatusCodes.OK).json({ comments, totalComments: comments.length });
 };
 const getSinglePostComments = async (req, res) => {
   const { id: postId } = req.params;
   const comments = await CommentSchema.find({ postId });
+  comments.forEach(
+    (comment) => (comment.comment = decryption(comment.comment))
+  );
   res.status(StatusCodes.OK).json({ comments, totalComments: comments.length });
 };
 const getSingleComment = async (req, res) => {
   const { id: commentId } = req.params;
-  const comment = await CommentSchema.findOne({ _id: commentId });
+  const singleComment = await CommentSchema.findOne({ _id: commentId });
   if (!comment) {
     throw new NotFoundError(`No comment with Id:${commentId}`);
   }
-  res.status(StatusCodes.OK).json({ comment });
+  const { comment } = singleComment;
+  singleComment.comment = decryption(comment);
+  res.status(StatusCodes.OK).json({ singleComment });
 };
 const createComment = async (req, res) => {
   const { comment, postId, isReply, parentId } = req.body;
@@ -30,11 +39,12 @@ const createComment = async (req, res) => {
   let depthOfComment = 0;
   if (isReply === "TRUE") {
     const comment = await CommentSchema.findOne({ _id: parentId });
-    console.log(comment);
     depthOfComment = comment.depth + 1;
   }
+  const encryptedData = encrytion(comment);
+
   const newComment = await CommentSchema.create({
-    comment,
+    comment: encryptedData,
     userId: req.user.userId,
     postId,
     parent: isReply === "TRUE" ? parentId : null,
@@ -60,7 +70,7 @@ const updateComment = async (req, res) => {
     throw new NotFoundError(`No comment with Id:${commentId}`);
   }
   checkUserPermissions(req.user, commentExists.userId);
-  commentExists.comment = comment;
+  commentExists.comment = encrytion(comment);
   await commentExists.save();
   res.status(StatusCodes.OK).json({ msg: "comment upadated successfully" });
 };
