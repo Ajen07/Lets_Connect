@@ -49,6 +49,11 @@ const UserSchema = new mongoose.Schema(
     impressions: {
       type: Number,
     },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+    },
   },
   { timestamps: true }
 );

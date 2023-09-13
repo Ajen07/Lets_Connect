@@ -7,12 +7,13 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 import connectDB from "./db/connectDB.js";
+import { Redis } from "ioredis";
 import "express-async-errors";
 //Routes
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import postsRoutes from "./routes/postRoutes.js";
-import commentRoutes from "./routes/commentRoutes.js"
+import commentRoutes from "./routes/commentRoutes.js";
 
 //Middlewares
 import notFound from "./middleware/notFound.js";
@@ -41,17 +42,19 @@ app.use(morgan("common"));
 app.use(cors());
 
 //Routes
+
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", authentication, userRoutes);
 app.use("/api/v1/posts", authentication, postsRoutes);
 app.use("/api/v1/comments", authentication, commentRoutes);
 
 app.use(notFound);
-app.use(errorHandlingMiddleware)
+app.use(errorHandlingMiddleware);
 
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
+
     app.listen(PORT, () => {
       console.log(`Server listening on port ${PORT}`);
     });
@@ -59,5 +62,8 @@ const start = async () => {
     console.log(error);
   }
 };
+if (process.env.NODE_ENV !== "test") {
+  start();
+}
 
-start();
+export default app;

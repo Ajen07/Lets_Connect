@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import User from "../model/UserSchema.js";
-import { NotFoundError } from "../errors/index.js";
+import { NotFoundError } from "../errors/index.js"
 
 const getSingleUser = async (req, res) => {
   const { id: userId } = req.params;
@@ -52,4 +52,8 @@ const addRemoveFriend = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: "friends Updated successfully" });
 };
 
-export { getSingleUser, getUserFriends, addRemoveFriend, getAllUsers };
+const updateUser=async(req,res)=>{
+
+}
+
+export { getSingleUser, getUserFriends, addRemoveFriend, getAllUsers,updateUser };

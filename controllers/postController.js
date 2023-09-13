@@ -55,9 +55,9 @@ const createPost = async (req, res) => {
 
 const likePost = async (req, res) => {
   const { id } = req.params;
-  const { userId } = req.user.userId;
+  const userId = req.user.userId;
   const post = await Post.findOne({ _id: id });
-  const isLiked = post.likes.get(userId);
+  const isLiked = post.likes?.get(userId);
 
   if (isLiked) {
     post.likes.delete(userId);
