@@ -32,7 +32,6 @@ const getSingleComment = async (req, res) => {
 };
 const createComment = async (req, res) => {
   const { comment, postId, isReply, parentId } = req.body;
-  console.log(req.body);
   if (!comment) {
     throw new BadRequestError("Comment cannot be empty");
   }
