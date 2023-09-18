@@ -1,9 +1,11 @@
 import User from "../model/UserSchema.js";
+import crypto from "crypto";
 import cloudinary from "cloudinary";
-import createJWT from "../utils/createJWT.js";
+import { attachCookiesToResponse } from "../utils/createJWT.js";
 import { BadRequestError, NotFoundError } from "../errors/index.js";
 import * as fs from "fs";
 import { StatusCodes } from "http-status-codes";
+import TokenSchema from "../model/TokenSchema.js";
 
 const register = async (req, res) => {
   const {
@@ -47,20 +49,39 @@ const login = async (req, res) => {
     throw NotFoundError("User doesnot exists");
   }
   const passwordMatch = await user.comparePassword(password);
-  console.log(passwordMatch);
   if (!passwordMatch) {
     throw new BadRequestError("Password is incorrect");
   }
   user.password = undefined;
-  const token = createJWT(user);
-  res.status(StatusCodes.OK).json({ user, token });
+
+  //refresh token
+  let refreshToken = "";
+  const existingToken = await Token.findOne({ userId: user._id });
+  if (existingToken) {
+    const { isValid } = existingToken;
+    if (!isValid) {
+      throw new BadRequestError("Invalid Token");
+    }
+    refreshToken = existingToken.refreshToken;
+    attachCookiesToResponse({ res, user, refreshToken });
+    res.status(StatusCodes.OK).json({ user });
+    return;
+  }
+  refreshToken = crypto.randomBytes(60).toString("hex");
+  const userAgent = req.headers["user-agent"];
+  const ip = req.ip;
+  const userToken = { refreshToken, userAgent, ip, userId: user._id };
+
+  await TokenSchema.create(userToken);
+
+  attachCookiesToResponse({ res, user, refreshToken });
+  res.status(StatusCodes.OK).json({ user });
 };
 const uploadPicture = async (req, res, next) => {
-  
   if (!req.files) {
     next();
   }
-  
+
   if (
     req.files &&
     !req.headers["content-type"].startsWith("multipart/form-data")
@@ -85,5 +106,19 @@ const uploadPicture = async (req, res, next) => {
     next();
   }
 };
+const logoutUser = async (req, res) => {
+  await TokenSchema.findOneAndDelete({ user: req.user.userId });
 
-export { register, login, uploadPicture };
+  res.cookie("accessToken", "logout", {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+  res.cookie("refreshToken", "logout", {
+    httpOnly: true,
+    expires: new Date(Date.now()),
+  });
+  res.status(StatusCodes.OK).json({ msg: "user logged out!" });
+};
+const verifyEmail = async (req, res) => {};
+
+export { register, login, uploadPicture, logoutUser, verifyEmail };

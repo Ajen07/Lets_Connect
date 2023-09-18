@@ -7,7 +7,7 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 import connectDB from "./db/connectDB.js";
-import { Redis } from "ioredis";
+import cookieParser from 'cookie-parser'
 import "express-async-errors";
 //Routes
 import authRoutes from "./routes/authRoutes.js";
@@ -30,6 +30,7 @@ const app = express();
 const PORT = 5000;
 
 app.use(express.json());
+app,use(cookieParser())
 app.use(fileUpload({ useTempFiles: true }));
 cloudinary.v2.config({
   cloud_name: process.env.CLOUD_NAME,

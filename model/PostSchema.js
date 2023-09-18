@@ -1,9 +1,9 @@
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 
 const postSchema = new mongoose.Schema(
   {
     userId: {
-      type: String,
+      type: mongoose.Schema.ObjectId,
       required: true,
       ref: "Users",
     },
