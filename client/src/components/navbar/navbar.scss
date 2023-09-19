@@ -1,0 +1,55 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  height: 4rem;
+  border-bottom: 1px solid lightgrey;
+  a {
+    text-decoration: none;
+  }
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    span {
+      text-decoration: none;
+      color: #0099ff;
+      font-weight: bolder;
+      text-transform: capitalize;
+      font-size: 1.5rem;
+    }
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      border: 1px solid lightgray;
+      padding: 0.5rem;
+      input {
+        border: none;
+        width: 500px;
+      }
+    }
+  }
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    .user {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: bold;
+      img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid #0099ff;
+        object-fit: cover;
+      }
+      span {
+        color: #0099ff;
+      }
+    }
+  }
+}
