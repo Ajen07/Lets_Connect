@@ -56,7 +56,7 @@ const login = async (req, res) => {
 
   //refresh token
   let refreshToken = "";
-  const existingToken = await Token.findOne({ userId: user._id });
+  const existingToken = await TokenSchema.findOne({ userId: user._id });
   if (existingToken) {
     const { isValid } = existingToken;
     if (!isValid) {

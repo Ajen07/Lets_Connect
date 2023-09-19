@@ -17,10 +17,10 @@ const authentication = async (req, res, next) => {
     throw new UnAuthorizedError("authentication invalid");
   } */
 
-  const { refreshToken, accessToken } = req.signedCookies;
   /*  if (!tokenUser) {
     throw new UnAuthorizedError("authentication invalid");
   } */
+  const { refreshToken, accessToken } = req.signedCookies;
   try {
     if (accessToken) {
       const payload = isTokenValid(accessToken);
@@ -35,6 +35,8 @@ const authentication = async (req, res, next) => {
     if (!existingToken || !existingToken?.isValid) {
       throw UnAuthorizedError("authentication invalid");
     }
+    const user = { _id: payload.userId, role: payload.userRole };
+    attachCookiesToResponse({ res, user, refreshToken });
     req.user = { userId: payload.userId, userRole: payload.userRole };
     next();
   } catch (error) {

@@ -2,7 +2,11 @@ import jwt from "jsonwebtoken";
 
 const createJWT = ({ payload }) => {
   const token = jwt.sign(
-    { userId: payload.user._id, userRole: payload.user.role },
+    {
+      userId: payload.user._id,
+      userRole: payload.user.role,
+      refreshToken: payload.refreshToken,
+    },
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_LIFETIME,
@@ -17,21 +21,21 @@ const isTokenValid = (token) => {
 };
 
 const attachCookiesToResponse = ({ res, user, refreshToken }) => {
-  const accessToken = createJWT({ payload: { user } });
-  const refreshToken = createJWT({ payload: { user } });
+  const accessTokenJWT = createJWT({ payload: { user } });
+  const refreshTokenJWT = createJWT({ payload: { user, refreshToken } });
   const lifeTime = 1000 * 60 * 60 * 24 * 30; //30days
 
-  res.cookie("accessToken", accessToken, {
-    http: true,
+  res.cookie("accessToken", accessTokenJWT, {
+    httpOnly: true,
     signed: true,
     secure: process.env.NODE_ENV === "production",
-    maxAge: 1000,
+    maxAge: 1000 * 60 * 60 * 24,
   });
-  res.cookie("refreshToken", refreshToken, {
-    http: true,
+  res.cookie("refreshToken", refreshTokenJWT, {
+    httpOnly: true,
     signed: true,
     secure: process.env.NODE_ENV === "production",
-    expiresIn: new Date(Date.now() + lifeTime),
+    maxAge:  lifeTime,
   });
 };
 
