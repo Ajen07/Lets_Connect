@@ -3,7 +3,7 @@ import Navbar from "../navbar/Navbar";
 import LeftBar from "../leftbar/LeftBar";
 import RightBar from "../rightbar/RightBar";
 import { Outlet } from "react-router-dom";
-import './layout.scss'
+import "./layout.scss";
 
 const Layout = () => {
   return (
@@ -11,7 +11,9 @@ const Layout = () => {
       <Navbar />
       <main className="main">
         <LeftBar />
+
         <Outlet />
+
         <RightBar />
       </main>
     </>

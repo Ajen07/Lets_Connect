@@ -1,0 +1,63 @@
+.leftbar {
+    flex: 1.5;
+    position: sticky;
+    top: 64px;
+    height: calc(100vh - 20px - 3rem + 1.6px);
+    overflow: scroll;
+    &::-webkit-scrollbar{
+        display: none;
+    }
+    background-color: rgb(39, 38, 38);
+    color: whitesmoke;
+  .container {
+    padding: 20px;
+    hr {
+      margin: 20px 0px;
+      border: none;
+      height: 0.5px;
+      background-color:rgb(112, 112, 112);;
+      
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      span{
+        font-size: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+      
+      .user{
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        img{
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        span{
+            font-size: 1rem;
+        }
+      }
+      .item{
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        img{
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        span{
+            font-size: 1rem;
+        }
+      }
+    }
+  }
+}

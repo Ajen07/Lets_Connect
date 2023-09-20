@@ -17,7 +17,6 @@ const Navbar = () => {
           <span>Lets Connect</span>
         </Link>
         <HomeOutlinedIcon />
-        <Brightness6OutlinedIcon />
         <GridViewOutlinedIcon />
         <div className="search">
           <SearchOutlinedIcon />

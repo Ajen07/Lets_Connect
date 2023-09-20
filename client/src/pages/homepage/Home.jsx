@@ -1,11 +1,15 @@
-import React from 'react'
+import React from "react";
+import "./home.scss";
+import Stories from "../../components/stories/Stories";
+import Posts from "../../components/posts/Posts";
 
 const Home = () => {
   return (
-    <div>
-      Home
-    </div>
-  )
-}
+    <section className="home">
+      <Stories />
+      <Posts/>
+    </section>
+  );
+};
 
-export default Home
+export default Home;

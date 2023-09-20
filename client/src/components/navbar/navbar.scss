@@ -4,7 +4,12 @@
   justify-content: space-between;
   padding: 10px 20px;
   height: 4rem;
-  border-bottom: 1px solid lightgrey;
+  border-bottom: 1px solid rgb(112, 112, 112);
+  position:sticky;
+  background-color: rgb(39, 38, 38);
+  color: whitesmoke;
+  top: 0;
+  z-index: 30;
   a {
     text-decoration: none;
   }
@@ -24,10 +29,18 @@
       align-items: center;
       gap: 0.3rem;
       border: 1px solid lightgray;
-      padding: 0.5rem;
+      padding: 0px 5px;
+      border-radius: 2rem;
+      overflow: hidden;
+      background-color: white;
+      color: black;
       input {
         border: none;
         width: 500px;
+        padding: 0.5rem;
+      }
+      input:focus{
+        outline: none;
       }
     }
   }
