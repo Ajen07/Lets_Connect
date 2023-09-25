@@ -40,13 +40,15 @@ const register = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ newUser });
 };
 const login = async (req, res) => {
+  console.log(req.body);
   const { email, password } = req.body;
+ 
   if (!email || !password) {
     throw new BadRequestError("All the fields are required");
   }
   const user = await User.findOne({ email }).select("+password");
   if (!user) {
-    throw NotFoundError("User doesnot exists");
+    throw new NotFoundError("User doesnot exists");
   }
   const passwordMatch = await user.comparePassword(password);
   if (!passwordMatch) {

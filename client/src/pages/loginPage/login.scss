@@ -1,86 +1,105 @@
-.login{
-    height: 100vh;
-    background-color: #85c2f0;
+.login {
+  height: 100vh;
+  background-color: #85c2f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .card {
+    width: 50%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    .card{
+    min-height: 600px;
+    background-color: white;
+    .left {
+      flex: 1;
+      background-image: linear-gradient(#0099ff, rgba(1, 6, 29, 0.578)),
+        url("../../assets/loginPageImage.jpg");
+      background-size: cover;
+      background-position: center;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      color: white;
+      overflow: hidden;
+      h1 {
+        font-size: 5rem;
+      }
+      p {
+        color: rgb(208, 208, 208);
+      }
+      span {
+        font-size: 1rem;
+      }
+      button {
         width: 50%;
-        display: flex;
-        min-height: 600px;
-        background-color: white;
-        .left{
-            flex: 1;
-            background-image: linear-gradient(#0099ff,rgba(1, 6, 29, 0.578)),url('../../assets/loginPageImage.jpg');
-            background-size: cover;
-            background-position: center;
-            padding: 50px;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            color: white;
-            overflow: hidden;
-            h1{
-                font-size: 5rem;
-               
-            }
-            p{
-                color: rgb(208, 208, 208);
-            }
-            span{
-               font-size: 1rem; 
-            }
-            button{
-                width: 50%;
-                padding: 1rem;
-                color: #0099ff;
-                font-weight: bold;
-                cursor: pointer;
-                border: none;
-                border-radius: 10px;
-            }
-            button:hover{
-                background-color: #0099ff;
-                color: white;
-                transition: 0.3s;
-            }
-        }
-        .right{
-            flex: 1;
-            padding: 50px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 1.5rem;
-            h1{
-                color: #0099ff;
-                font-size: 2rem;
-            }
-            form{
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
-                input{
-                    border: none;
-                    border-bottom: 1px solid grey;
-                    padding: 20px 10px;
-                }
-                button{
-                    width: 50%;
-                    padding: 1rem;
-                    color: white;
-                    background-color: #0099ff;
-                    font-weight: bold;
-                    cursor: pointer;
-                    border: none;
-                    border-radius: 10px;
-
-                }
-                button:hover{
-                    background-color:#81c2ed;
-                }
-
-            }
-        }
+        padding: 1rem;
+        color: #0099ff;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        border-radius: 10px;
+      }
+      button:hover {
+        background-color: #0099ff;
+        color: white;
+        transition: 0.3s;
+      }
     }
+    .right {
+      flex: 1;
+      padding: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+      span {
+        font-size: 1rem;
+        color: rgb(0, 215, 32);
+        text-transform: capitalize;
+        font-weight: 800;
+      }
+      h1 {
+        color: #0099ff;
+        font-size: 2rem;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+        div {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          span {
+            font-size: 0.8rem;
+            color: red;
+          }
+        }
+        input {
+          border: none;
+          border-bottom: 1px solid grey;
+          padding: 5px;
+        }
+        input:focus {
+          outline: #0099ff;
+          border-left: 5px solid #0099ff;
+        }
+        button {
+          width: 50%;
+          padding: 1rem;
+          color: white;
+          background-color: #0099ff;
+          font-weight: bold;
+          cursor: pointer;
+          border: none;
+          border-radius: 10px;
+          margin-top: 1rem;
+        }
+        button:hover {
+          background-color: #81c2ed;
+        }
+      }
+    }
+  }
 }
