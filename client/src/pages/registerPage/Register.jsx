@@ -1,8 +1,36 @@
 import React from "react";
 import "./register.scss";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useRegisterMutation } from "../../features/auth/authApiSlice";
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const [register, { data, isLoading, isError, error, isSuccess }] =
+    useRegisterMutation();
+  if (isError) {
+    toast.error(`${error.data.msg}`, {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      pauseOnHover: false,
+    });
+  }
+  if (isSuccess) {
+  }
+  const initialValues = {
+    email: "",
+    password: "",
+  };
+  const validationSchema = Yup.object({
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email Id is required"),
+    password: Yup.string().required("Password is required"),
+  });
+  const onSubmit = (values) => {
+    register({ values });
+  };
   return (
     <main className="register">
       <section className="card">
@@ -22,7 +50,7 @@ const Register = () => {
         </article>
         <article className="right">
           <h1>Register</h1>
-          <form action="">
+          <form onSubmit={()=>onSubmit()}>
             <input type="file" name="image" className="custom-file-input" />
             <input
               type="text"

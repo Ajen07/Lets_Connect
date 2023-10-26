@@ -18,6 +18,10 @@ const TokenSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    tokenExpirationDate:{
+      type:Date,
+      required:true
+    },
     userId: {
       type: mongoose.Schema.ObjectId,
       required: true,

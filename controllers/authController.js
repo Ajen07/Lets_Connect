@@ -40,9 +40,8 @@ const register = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ newUser });
 };
 const login = async (req, res) => {
-  console.log(req.body);
   const { email, password } = req.body;
- 
+
   if (!email || !password) {
     throw new BadRequestError("All the fields are required");
   }
@@ -59,7 +58,8 @@ const login = async (req, res) => {
   //refresh token
   let refreshToken = "";
   const existingToken = await TokenSchema.findOne({ userId: user._id });
-  if (existingToken) {
+  const currentDate=new Date()
+  if (existingToken && existingToken.tokenExpirationDate> currentDate) {
     const { isValid } = existingToken;
     if (!isValid) {
       throw new BadRequestError("Invalid Token");
@@ -72,7 +72,15 @@ const login = async (req, res) => {
   refreshToken = crypto.randomBytes(60).toString("hex");
   const userAgent = req.headers["user-agent"];
   const ip = req.ip;
-  const userToken = { refreshToken, userAgent, ip, userId: user._id };
+  const expiryDate = Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60;
+  const tokenExpirationDate = new Date(Date.now() + expiryDate);
+  const userToken = {
+    refreshToken,
+    userAgent,
+    ip,
+    userId: user._id,
+    tokenExpirationDate,
+  };
 
   await TokenSchema.create(userToken);
 
