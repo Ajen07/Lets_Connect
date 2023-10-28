@@ -8,10 +8,11 @@ import * as Yup from "yup";
 import { useLoginMutation } from "../../features/auth/authApiSlice";
 import { useDispatch } from "react-redux";
 import { setUserCredentials } from "../../features/auth/auth";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const dispatch = useDispatch();
-  const [login, { data, isLoading, isError, error, isSuccess }] =
-    useLoginMutation();
+  const [login, { data, isLoading, isError, error, isSuccess }] =useLoginMutation();
+  const navigation=useNavigate()
   if (isError) {
     toast.error(`${error.data.msg}`, {
       position: "top-right",
@@ -22,6 +23,7 @@ const Login = () => {
   }
   if (isSuccess) {
     dispatch(setUserCredentials(data));
+    navigation("/")
   }
   const initialValues = {
     email: "",

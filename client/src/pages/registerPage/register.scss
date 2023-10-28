@@ -51,7 +51,6 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 1.5rem;
             h1{
                 color: #0099ff;
                 font-size: 2rem;
@@ -59,12 +58,21 @@
             form{
                 display: flex;
                 flex-direction: column;
-                gap: 0.5rem;
+                margin-top: 2rem;
                 input{
                     border: none;
                     border-bottom: 1px solid grey;
-                    padding: 15px 10px;
+                    padding: 2px 4px;
                 }
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    span {
+                      font-size: 0.8rem;
+                      color: red;
+                    }
+                    margin-bottom: 2rem ;
+                  }
               
                 .custom-file-input{
                     display: inline-block;
@@ -89,7 +97,6 @@
                     cursor: pointer;
                     border: none;
                     border-radius: 10px;
-                    margin-top: 2rem;
                 }
                 button:hover{
                     background-color:#81c2ed;
