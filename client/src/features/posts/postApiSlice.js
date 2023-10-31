@@ -14,6 +14,25 @@ export const postApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    createPost: builder.mutation({
+      query: (id) => ({
+        url: `/api/v1/posts/${id}`,
+        method: "POST",
+      }),
+    }),
+    editPost: builder.mutation({
+      query: (id) => ({
+        url: `/api/v1/posts/${id}`,
+        method: "PATCH",
+      }),
+    }),
+    deletePost: builder.query({
+      query: (id) => ({
+        url: `/api/v1/posts/${id}`,
+        method: "DELETE",
+      }),
+    }),
+   
   }),
 });
 

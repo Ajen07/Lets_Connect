@@ -8,7 +8,8 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import image from '../../assets/loginPageImage.jpg'
+import image from "../../assets/loginPageImage.jpg";
+import CreatePost from "../createPost/CreatePost";
 const Navbar = () => {
   return (
     <header className="navbar">
@@ -27,9 +28,9 @@ const Navbar = () => {
         <Person2OutlinedIcon />
         <EmailOutlinedIcon />
         <NotificationsOutlinedIcon />
-
+        <CreatePost />
         <div className="user">
-            <img src={image} alt="" />
+          <img src={image} alt="" />
           <span>John Doe</span>
         </div>
       </article>

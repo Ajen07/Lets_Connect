@@ -19,7 +19,7 @@ const Posts = () => {
   }
 
   if (isSuccess) {
-    dispatch(() => setAllPosts(data));
+    dispatch(setAllPosts(data));
   }
 
   return (
