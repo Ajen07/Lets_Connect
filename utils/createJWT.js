@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 const createRefreshJWT = ({ payload }) => {
   const token = jwt.sign(
     {
-      userId: payload.user._id,
-      userRole: payload.user.role,
+      userId: payload.user.userId,
+      userRole: payload.user.userRole,
       refreshToken: payload.refreshToken,
     },
     process.env.JWT_SECRET,
@@ -17,8 +17,8 @@ const createRefreshJWT = ({ payload }) => {
 const createAccessJWT = ({ payload }) => {
   const token = jwt.sign(
     {
-      userId: payload.user._id,
-      userRole: payload.user.role,
+      userId: payload.user.userId,
+      userRole: payload.user.userRole,
     },
     process.env.JWT_SECRET,
     {
@@ -36,7 +36,7 @@ const isTokenValid = (token) => {
 const attachCookiesToResponse = ({ res, user, refreshToken }) => {
   const accessTokenJWT = createAccessJWT({ payload: { user } });
   const refreshTokenJWT = createRefreshJWT({ payload: { user, refreshToken } });
-  const lifeTime = Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60
+  const lifeTime = Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60;
 
   res.cookie("accessToken", accessTokenJWT, {
     httpOnly: true,

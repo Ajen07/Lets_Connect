@@ -58,8 +58,8 @@ const login = async (req, res) => {
   //refresh token
   let refreshToken = "";
   const existingToken = await TokenSchema.findOne({ userId: user._id });
-  const currentDate=new Date()
-  if (existingToken && existingToken.tokenExpirationDate> currentDate) {
+  const currentDate = new Date();
+  if (existingToken && existingToken.tokenExpirationDate > currentDate) {
     const { isValid } = existingToken;
     if (!isValid) {
       throw new BadRequestError("Invalid Token");
@@ -84,7 +84,11 @@ const login = async (req, res) => {
 
   await TokenSchema.create(userToken);
 
-  attachCookiesToResponse({ res, user, refreshToken });
+  attachCookiesToResponse({
+    res,
+    user: { userId: user._id, userRole: user.role },
+    refreshToken,
+  });
   res.status(StatusCodes.OK).json({ user });
 };
 const uploadPicture = async (req, res, next) => {
