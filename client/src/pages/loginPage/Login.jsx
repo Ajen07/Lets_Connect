@@ -22,7 +22,7 @@ const Login = () => {
     });
   }
   if (isSuccess) {
-    dispatch(()=>setUserCredentials(data));
+    dispatch(setUserCredentials(data));
     navigation("/")
   }
   const initialValues = {

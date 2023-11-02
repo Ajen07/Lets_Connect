@@ -15,25 +15,32 @@ export const postApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     createPost: builder.mutation({
-      query: (id) => ({
-        url: `/api/v1/posts/${id}`,
+      query: ({ values }) => ({
+        url: `/api/v1/posts`,
         method: "POST",
+        body: values,
       }),
     }),
     editPost: builder.mutation({
-      query: (id) => ({
+      query: ({ values, id }) => ({
         url: `/api/v1/posts/${id}`,
         method: "PATCH",
+        body: values,
       }),
     }),
-    deletePost: builder.query({
-      query: (id) => ({
+    deletePost: builder.mutation({
+      query: ({ id }) => ({
         url: `/api/v1/posts/${id}`,
         method: "DELETE",
       }),
     }),
-   
   }),
 });
 
-export const { useGetAllPostsQuery, useGetSinglePostQuery } = postApiSlice;
+export const {
+  useGetAllPostsQuery,
+  useGetSinglePostQuery,
+  useCreatePostMutation,
+  useDeletePostMutation,
+  useEditPostMutation,
+} = postApiSlice;

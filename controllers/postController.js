@@ -50,7 +50,7 @@ const createPost = async (req, res) => {
     likes: {},
   });
 
-  res.status(StatusCodes.CREATED).json({ newPost });
+  res.status(StatusCodes.CREATED).json({ msg:"Post Added to universe" });
 };
 
 const likePost = async (req, res) => {

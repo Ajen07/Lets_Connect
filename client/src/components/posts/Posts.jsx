@@ -9,7 +9,7 @@ const Posts = () => {
   const dispatch = useDispatch();
   const { data, isError, isLoading, isSuccess, error } = useGetAllPostsQuery();
   const { posts } = useSelector((state) => state.post);
-  console.log(posts);
+  console.log(localStorage.getItem("user"));
   if (isLoading) {
     return <h1>Loading Posts....</h1>;
   }
@@ -24,9 +24,9 @@ const Posts = () => {
 
   return (
     <div className="posts">
-      {data?.posts.map((post) => (
-        <Post post={post} key={post._id} />
-      ))}
+      {posts.length > 0
+        ? posts.map((post) => <Post post={post} key={post._id} />)
+        : null}
     </div>
   );
 };
