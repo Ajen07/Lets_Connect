@@ -65,7 +65,11 @@ const login = async (req, res) => {
       throw new BadRequestError("Invalid Token");
     }
     refreshToken = existingToken.refreshToken;
-    attachCookiesToResponse({ res, user, refreshToken });
+    attachCookiesToResponse({
+      res,
+      user: { userId: user._id, userRole: user.role },
+      refreshToken,
+    });
     res.status(StatusCodes.OK).json({ user });
     return;
   }

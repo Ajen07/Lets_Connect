@@ -15,15 +15,14 @@ const CreatePost = () => {
   const [createPost, { data, isSuccess, error }] = useCreatePostMutation();
   const initialValues = { description: "" };
   const dispatch = useDispatch();
-  console.log(data);
   const handleSubmit = (values) => {
     // Handle form submission here
-    initialValues.description=""
+    initialValues.description = "";
     toast.promise(
       createPost({ values }),
       {
         pending: "Posting...",
-        success: data?.msg,
+        success: "Post Added",
         error: error?.data?.msg,
       },
       {
@@ -47,6 +46,7 @@ const CreatePost = () => {
 
   return (
     <>
+    
       <button onClick={handleModalOpen}>
         <ModeEditIcon />
       </button>

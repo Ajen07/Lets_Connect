@@ -1,12 +1,14 @@
 import { apiSlice } from "../../app/api/apiSlice";
 
 export const postApiSlice = apiSlice.injectEndpoints({
+  tagTypes: ["Post"],
   endpoints: (builder) => ({
     getAllPosts: builder.query({
       query: () => ({
         url: "/api/v1/posts",
         method: "GET",
       }),
+      providesTags: ["Post"],
     }),
     getSinglePost: builder.query({
       query: (id) => ({
@@ -20,6 +22,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: values,
       }),
+      invalidatesTags: ["Post"],
     }),
     editPost: builder.mutation({
       query: ({ values, id }) => ({
@@ -33,6 +36,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/posts/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Post"],
     }),
   }),
 });

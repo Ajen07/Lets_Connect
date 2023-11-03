@@ -9,7 +9,6 @@ const Posts = () => {
   const dispatch = useDispatch();
   const { data, isError, isLoading, isSuccess, error } = useGetAllPostsQuery();
   const { posts } = useSelector((state) => state.post);
-  console.log(localStorage.getItem("user"));
   if (isLoading) {
     return <h1>Loading Posts....</h1>;
   }

@@ -12,8 +12,12 @@ import parse from "html-react-parser";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch, useSelector } from "react-redux";
-import { useDeletePostMutation } from "../../features/posts/postApiSlice";
+import {
+  useDeletePostMutation,
+  useGetAllPostsQuery,
+} from "../../features/posts/postApiSlice";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
@@ -24,13 +28,13 @@ const Post = ({ post }) => {
   } = useSelector((state) => state.auth);
   //TEMPORARY
   const liked = false;
-  const handleDeletePost = ({ id }) => {
-    toast.promise(
+  const handleDeletePost = async ({ id }) => {
+    await toast.promise(
       deletePost({ id }),
       {
-        pending: "Posting...",
-        success: data?.msg,
-        error: error?.data?.msg,
+        pending: "Deleting Post ...",
+        success: "Post deleted from universe",
+        error: "some error",
       },
       {
         position: "top-right",

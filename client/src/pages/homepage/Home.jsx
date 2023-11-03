@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <section className="home">
       <Stories />
-      <Posts/>
+      <Posts />
     </section>
   );
 };
