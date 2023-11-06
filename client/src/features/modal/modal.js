@@ -9,9 +9,13 @@ const modalSlice = createSlice({
   name: "modal",
   initialState,
   reducers: {
-    openModal: (state, action) => {
+    openCreateModal: (state, action) => {
       state.isModalOpen = true;
       state.type = "CREATE_POST";
+    },
+    openEditModal: (state, action) => {
+      state.isModalOpen = true;
+      state.type = "EDIT_POST";
     },
     closeModal: (state, action) => {
       state.isModalOpen = false;
@@ -20,6 +24,6 @@ const modalSlice = createSlice({
   },
 });
 
-export const { openModal, closeModal } = modalSlice.actions;
+export const { openCreateModal, closeModal ,openEditModal} = modalSlice.actions;
 
 export default modalSlice.reducer;

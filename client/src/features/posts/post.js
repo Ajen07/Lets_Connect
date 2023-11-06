@@ -14,6 +14,7 @@ const postSlice = createSlice({
       state.posts = action.payload.posts;
     },
     setIsEdit: (state, action) => {
+      console.log(action);
       state.isEdit = !state.isEdit;
       state.editId = action.payload.editId;
     },

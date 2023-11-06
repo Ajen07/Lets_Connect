@@ -30,6 +30,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
         body: values,
       }),
+      invalidatesTags: ["Post"],
     }),
     deletePost: builder.mutation({
       query: ({ id }) => ({

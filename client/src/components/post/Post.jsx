@@ -5,19 +5,19 @@ import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { Link, UNSAFE_DataRouterStateContext } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Comments from "../comments/Comment";
 import { useState } from "react";
 import parse from "html-react-parser";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  useDeletePostMutation,
-  useGetAllPostsQuery,
-} from "../../features/posts/postApiSlice";
+import { setIsEdit } from "../../features/posts/post";
+import { useDeletePostMutation } from "../../features/posts/postApiSlice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { openEditModal } from "../../features/modal/modal";
+import EditPost from "../editPost/EditPost";
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
@@ -27,6 +27,7 @@ const Post = ({ post }) => {
     user: { _id },
   } = useSelector((state) => state.auth);
   //TEMPORARY
+  const dispatch = useDispatch();
   const liked = false;
   const handleDeletePost = async ({ id }) => {
     await toast.promise(
@@ -47,6 +48,10 @@ const Post = ({ post }) => {
         theme: "dark",
       }
     );
+  };
+  const handleEditPost = (id) => {
+    dispatch(setIsEdit({ editId: id }));
+    dispatch(openEditModal());
   };
   return (
     <div className="post">
@@ -80,7 +85,11 @@ const Post = ({ post }) => {
                   >
                     <DeleteIcon />
                   </button>
-                  <button className="edit-btn" title="Edit Post">
+                  <button
+                    className="edit-btn"
+                    title="Edit Post"
+                    onClick={() => handleEditPost(post._id)}
+                  >
                     <EditIcon />
                   </button>
                 </div>
@@ -106,6 +115,7 @@ const Post = ({ post }) => {
             Share
           </div>
         </div>
+        <EditPost />
         {commentOpen && <Comments />}
       </div>
     </div>

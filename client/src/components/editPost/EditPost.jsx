@@ -1,28 +1,32 @@
-import React, { useState } from "react";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import "./createPost.scss";
-import { closeModal, openCreateModal } from "../../features/modal/modal";
+import React from "react";
+import "./editPost.scss";
 import { useDispatch, useSelector } from "react-redux";
+import { closeModal } from "../../features/modal/modal";
 import { Formik, Field, Form, ErrorMessage, useField } from "formik";
-import { ToastContainer, toast } from "react-toastify";
-
+import { useEditPostMutation } from "../../features/posts/postApiSlice";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useCreatePostMutation } from "../../features/posts/postApiSlice";
+import { ToastContainer, toast } from "react-toastify";
 
-const CreatePost = () => {
+const EditPost = () => {
+  const { isEdit, editId, posts } = useSelector((state) => state.post);
   const { isModalOpen, type } = useSelector((state) => state.modal);
-  const [createPost, { data, isSuccess, error }] = useCreatePostMutation();
-  const initialValues = { description: "" };
+  const [editPost, { error }] = useEditPostMutation();
   const dispatch = useDispatch();
+  const handleModalClose = () => {
+    dispatch(closeModal());
+  };
+  const post = posts.find((post) => post._id === editId);
+  const initialValues = {
+    description: post?.description,
+  };
   const handleSubmit = (values) => {
-    // Handle form submission here
     initialValues.description = "";
     toast.promise(
-      createPost({ values }),
+      editPost({ values, id: editId }),
       {
-        pending: "Posting...",
-        success: "Post Added",
+        pending: "Editing...",
+        success: "Post Edited",
         error: error?.data?.msg,
       },
       {
@@ -37,21 +41,10 @@ const CreatePost = () => {
       }
     );
   };
-  const handleModalOpen = () => {
-    dispatch(openCreateModal());
-  };
-  const handleModalClose = () => {
-    dispatch(closeModal());
-  };
-
   return (
     <>
-    
-      <button onClick={handleModalOpen}>
-        <ModeEditIcon />
-      </button>
-      {isModalOpen && type === "CREATE_POST" && (
-        <div className="modal">
+      {isModalOpen && type === "EDIT_POST" && (
+        <div className="modal1">
           <div className="modal-content">
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
               <Form>
@@ -81,4 +74,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default EditPost;
