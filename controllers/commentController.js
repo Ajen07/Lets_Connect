@@ -24,7 +24,7 @@ const getSingleComment = async (req, res) => {
   const { id: commentId } = req.params;
   const singleComment = await CommentSchema.findOne({ _id: commentId });
   if (!comment) {
-    throw new NotFoundError(`No comment with Id:${commentId}`);
+    throw new NotFoundError(`No comment with the Id:${commentId}`);
   }
   const { comment } = singleComment;
   singleComment.comment = decryption(comment);
